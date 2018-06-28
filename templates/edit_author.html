@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    管理系统|编辑作者
+{% endblock title %}
+
+{% block main %}
+    <h1 class="page-header">作者管理页面</h1>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">编辑作者</h3>
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal" action="{% url 'edit_author' edit_author_obj.id %}" method="post">
+                <div class="form-group">
+                    <label for="author-name" class="col-sm-2 control-label">姓名</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="author-name" placeholder="姓名" name="author_name"
+                               value="{{ edit_author_obj.name }}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="books" class="col-sm-2 control-label">作品</label>
+                    <div class="col-sm-10">
+                        <select multiple class="form-control" id="books" name="books">
+                            {% for book in books %}
+                                {% if book in edit_author_obj.book.all %}
+                                    <option selected value="{{ book.id }}">{{ book.title }}</option>
+                                {% else %}
+                                    <option value="{{ book.id }}">{{ book.title }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-success">提交</button>
+                        <p style="color: red;">{{ error_msg }}</p>
+                    </div>
+                </div>
+                {% csrf_token %}
+            </form>
+        </div>
+    </div>
+
+{% endblock main %}
+
+{% block author_list %}
+active
+{% endblock author_list %}

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    管理系统|书籍列表页
+{% endblock title %}
+
+{% block main %}
+    <h1 class="page-header">书籍管理页面</h1>
+
+    <!-- 面板开始 -->
+    <div class="panel panel-primary">
+        <div class="panel-heading">书籍列表 <i class="fa fa-thumb-tack pull-right"></i></div>
+        <div class="panel-body">
+            <div class="row" style="margin-bottom: 15px">
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search for...">
+                        <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button">搜索</button>
+                                </span>
+                    </div><!-- /input-group -->
+                </div><!-- /.col-md-4 -->
+                <div class="col-md-3 pull-right">
+                    <a href="{% url 'add_book' %}" class="btn btn-success pull-right"><i class="fa fa-plus fa-fw"></i>添加书籍</a>
+                    <button class="btn btn-success pull-right" data-toggle="modal" data-target="#myModal">新增
+                    </button>
+                </div>
+
+            </div><!-- /.row -->
+
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>id</th>
+                    <th>书名</th>
+                    <th>出版社</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for book in books %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ book.id }}</td>
+                        <td>《{{ book.title }}》</td>
+                        <td>{{ book.publisher.name }}</td>
+                        <td><a class="btn btn-danger" href="{% url 'delete_book' book.id %}"><i
+                                class="fa fa-trash-o fa-fw"></i>删除</a>&nbsp
+                            <a class="btn btn-info" href="{% url 'edit_book' book.id %}"><i
+                                    class="fa fa-pencil fa-fw"></i>编辑</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock main %}
+
+{% block book_list %}
+    active
+{% endblock book_list %}

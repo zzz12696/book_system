@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    管理系统|添加作者
+{% endblock title %}
+
+{% block main %}
+    <h1 class="page-header">作者管理页面</h1>
+
+    <!-- 面板开始 -->
+    <div class="panel panel-primary">
+        <!-- Default panel contents -->
+        <div class="panel-heading">作者列表 <i class="fa fa-thumb-tack pull-right"></i></div>
+        <div class="panel-body">
+            <div class="row" style="margin-bottom: 15px">
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search for...">
+                        <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button">搜索</button>
+                                </span>
+                    </div><!-- /input-group -->
+                </div><!-- /.col-md-4 -->
+                <div class="col-md-3 pull-right">
+                    <a href="{% url 'add_author' %}" class="btn btn-success pull-right"><i class="fa fa-plus fa-fw"></i>添加作者</a>
+                    <button class="btn btn-success pull-right" data-toggle="modal" data-target="#myModal">新增
+                    </button>
+                </div>
+
+            </div><!-- /.row -->
+
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>id</th>
+                    <th>作者名字</th>
+                    <th>作品</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for author in author_list %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ author.id }}</td>
+                        <td>{{ author.name }}</td>
+                        <td>
+                            {% for book in author.book.all %}
+                                《{{ book.title }}》&nbsp;
+                            {% endfor %}
+                        </td>
+                        <td>
+                            <a class="btn btn-danger" href="{% url 'delete_author' author.id %}"><i
+                                    class="fa fa-trash-o fa-fw"></i>删除</a>
+                            <a class="btn btn-info" href="{% url 'edit_author' author.id %}"><i
+                                    class="fa fa-pencil fa-fw"></i>编辑</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+{% endblock main %}
+
+{% block author_list %}
+active
+{% endblock author_list %}
